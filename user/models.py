@@ -1,5 +1,5 @@
 from django.db import models
-
+from company.models import Jobs
 class Users(models.Model):
     username = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
@@ -113,3 +113,8 @@ class Data(models.Model):
     name = models.CharField(max_length=100)
     value = models.IntegerField()
 
+class UserInterestedJobs(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    job = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    is_interested = models.BooleanField()
+    comment = models.TextField()
