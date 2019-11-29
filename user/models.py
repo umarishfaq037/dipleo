@@ -12,10 +12,11 @@ class Users(models.Model):
 
 class Profile(models.Model):
     users = models.OneToOneField(Users, on_delete=models.DO_NOTHING)
-    identification = models.CharField(max_length=60)
+    identification_type = models.CharField(max_length=60)
+    identification_number = models.CharField(max_length=60)
     birth_date = models.DateField()
-    name = models.CharField(max_length=30)
-    surname = models.CharField(max_length=20)
+    name = models.CharField(max_length=40)
+    surname = models.CharField(max_length=40)
     USER_GENDER = (
         ('male', 'male'),
         ('female', 'female'),
@@ -26,12 +27,89 @@ class Profile(models.Model):
     description = models.TextField(max_length=255)
     contact = models.CharField(max_length=25)
     address = models.CharField(max_length=50)
-    city = models.CharField(max_length=15)
-    country = models.CharField(max_length=15)
+    city = models.CharField(max_length=30)
+    country = models.CharField(max_length=30)
+
+    country = models.CharField(max_length=30)
     AVAILABLE = (
-        ('Move', 'Move'),
-        ('Travel', 'Travel')
+        ('move', 'move'),
+        ('travel', 'travel')
     )
-    availability = models.CharField(max_length=15, choices=AVAILABLE)
     #academy_id . It will be a foreign key
+    password = models.CharField(max_length=50)
+    years_of_experience = models.IntegerField(max_field=30)
+    CURRENT_SITUATION = (
+        ('working', 'working'),
+        ('looking_for_job', 'looking_for_job')
+    )
+    best_attributes = models.CharField(max_field=255)
+    interesting_data = models.TextField(max_field=255)
+    activity1 = models.CharField(max_field=100)
+    activity2 = models.CharField(max_field=100)
+    license = models.BooleanField(default=False)
+    vehicle = models.BooleanField(default=False)
+    disabilities = models.BooleanField(default=False)
+    industry1 = models.CharField(max_length=100)
+    industry2 = models.CharField(max_length=100)
+    industry3 = models.CharField(max_length=100)
+    industry4 = models.CharField(max_length=100)
+    industry5 = models.CharField(max_length=100)
+    City1 = models.CharField(max_length=100)
+    City2 = models.CharField(max_length=100)
+    City3 = models.CharField(max_length=100)
+    min_salary = models.IntegerField()
+    max_salary = models.IntegerField
+
+class Education(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    school = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    education_level = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    data_of_graduation = models.DateField
+
+class Scholarship(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=100)
+    date = models.DateField()
+
+class Employement(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    company_name = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    from_date = models.DateField()
+    to_date = models.DateField()
+    achievements = models.CharField(max_length=255)
+
+class Reference(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    first_name = models.CharField(max_length=100)
+    relationship = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    email = models.CharField(max_field=100)
+
+class Skill(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=100)
+    value = models.IntegerField()
+
+class Language(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=100)
+    value = models.IntegerField()
+
+class Programming(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=100)
+    value = models.IntegerField()
+
+class Design(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=100)
+    value = models.IntegerField()
+
+class Data(models.Model):
+    profiles = models.OneToManyField(Profile, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=100)
+    value = models.IntegerField()
 
