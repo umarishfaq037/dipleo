@@ -22,4 +22,5 @@ from django.conf.urls import url
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/', views.UsersList.as_view()),
+    url(r'user_profile', views.Profile.as_view())
 ]
