@@ -13,6 +13,7 @@ class Users(models.Model):
     def __str__(self):
         return self.username
 
+
 class Profile(models.Model):
     users = models.OneToOneField(Users, on_delete=models.DO_NOTHING)
     identification_type = models.CharField(max_length=60)
@@ -36,13 +37,15 @@ class Profile(models.Model):
         ('move', 'move'),
         ('travel', 'travel')
     )
+    available = models.CharField(max_length=10, default='travel', choices=AVAILABLE)
     #academy_id . It will be a foreign key
-    password = models.CharField(max_length=50)
+    # password = models.CharField(max_length=50)
     years_of_experience = models.IntegerField()
     CURRENT_SITUATION = (
         ('working', 'working'),
         ('looking_for_job', 'looking_for_job')
     )
+    current_situation = models.CharField(max_length=20, default='working', choices=CURRENT_SITUATION)
     best_attributes = models.CharField(max_length=255)
     interesting_data = models.TextField()
     activity1 = models.CharField(max_length=100)
@@ -60,6 +63,11 @@ class Profile(models.Model):
     City3 = models.CharField(max_length=100)
     min_salary = models.IntegerField()
     max_salary = models.IntegerField
+    objects = models.Manager()
+
+    def __str__(self):
+        return self.email
+
 
 class Education(models.Model):
     profiles = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
