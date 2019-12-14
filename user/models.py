@@ -9,6 +9,7 @@ class Users(models.Model):
     ('company', 'company'),
 )
     users_type = models.CharField(max_length=10, choices=USER_TYPE)
+    objects = models.Manager()
 
     def __str__(self):
         return self.username
@@ -53,16 +54,16 @@ class Profile(models.Model):
     licenses = models.BooleanField(default=False)
     vehicle = models.BooleanField(default=False)
     disabilities = models.BooleanField(default=False)
-    industry1 = models.CharField(max_length=100)
-    industry2 = models.CharField(max_length=100)
-    industry3 = models.CharField(max_length=100)
-    industry4 = models.CharField(max_length=100)
-    industry5 = models.CharField(max_length=100)
-    City1 = models.CharField(max_length=100)
-    City2 = models.CharField(max_length=100)
-    City3 = models.CharField(max_length=100)
+    industry1 = models.CharField(max_length=100, null=True)
+    industry2 = models.CharField(max_length=100, null=True)
+    industry3 = models.CharField(max_length=100, null=True)
+    industry4 = models.CharField(max_length=100, null=True)
+    industry5 = models.CharField(max_length=100, null=True)
+    city1 = models.CharField(max_length=100, null=True)
+    city2 = models.CharField(max_length=100, null=True)
+    city3 = models.CharField(max_length=100, null=True)
     min_salary = models.IntegerField()
-    max_salary = models.IntegerField
+    max_salary = models.IntegerField()
     objects = models.Manager()
 
     def __str__(self):

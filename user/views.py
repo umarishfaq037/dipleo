@@ -14,7 +14,7 @@ class UsersList(APIView):
         pass
 
 
-class Profile(APIView):
+class UserProfile(APIView):
     def post(self, request):
         profile_data = request.data
         print(profile_data)
@@ -23,7 +23,7 @@ class Profile(APIView):
         birth_date = profile_data.get('birth_date')
         name = profile_data.get('name')
         surname = profile_data.get('surname')
-        user_gender = profile_data.get('user_gender')
+        gender = profile_data.get('gender')
         email = profile_data.get('email')
         description = profile_data.get('description')
         contact = profile_data.get('contact')
@@ -59,7 +59,7 @@ class Profile(APIView):
         profile = Profile.objects.create(users=user,
                                          identification_type=identification_type,
                                          identification_number=identification_number, birth_date=birth_date,
-                                         name=name, surname=surname, user_gender=user_gender, email=email,
+                                         name=name, surname=surname, gender=gender, email=email,
                                          description=description, contact=contact, address=address, city=city,
                                          country=country, available=available, years_of_experience=years_of_experience,
                                          current_situation=current_situation, best_attributes=best_attributes,
@@ -68,5 +68,4 @@ class Profile(APIView):
                                          industry1=industry1, industry2=industry2, industry3=industry3,
                                          industry4=industry4, industry5=industry5, city1=city1, city2=city2,
                                          city3=city3, min_salary=min_salary, max_salary=max_salary)
-        print(profile)
         return Response(200)
