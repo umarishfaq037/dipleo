@@ -76,12 +76,14 @@ class Education(models.Model):
     city = models.CharField(max_length=100)
     education_level = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
-    data_of_graduation = models.DateField
+    date_of_graduation = models.DateField(default=None)
+
 
 class Scholarship(models.Model):
     profiles = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=100)
     date = models.DateField()
+
 
 class Employement(models.Model):
     profiles = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
@@ -90,6 +92,7 @@ class Employement(models.Model):
     from_date = models.DateField()
     to_date = models.DateField()
     achievements = models.CharField(max_length=255)
+
 
 class Reference(models.Model):
     profiles = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)

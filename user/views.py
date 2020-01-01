@@ -3,6 +3,8 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import UserSerializer
 from rest_framework.parsers import JSONParser
+import json
+
 
 class UsersList(APIView):
     def get(self, request):
@@ -17,7 +19,7 @@ class UsersList(APIView):
 class UserProfile(APIView):
     def post(self, request):
         profile_data = request.data
-        print(profile_data)
+        # print(profile_data)
         identification_type = profile_data.get('identification_type')
         identification_number = profile_data.get('identification_number')
         birth_date = profile_data.get('birth_date')
@@ -55,7 +57,6 @@ class UserProfile(APIView):
         max_salary = profile_data.get('max_salary')
 
         user = Users.objects.create(username=email, password=password, users_type='Seeker')
-        print(user)
         profile = Profile.objects.create(users=user,
                                          identification_type=identification_type,
                                          identification_number=identification_number, birth_date=birth_date,
@@ -68,4 +69,87 @@ class UserProfile(APIView):
                                          industry1=industry1, industry2=industry2, industry3=industry3,
                                          industry4=industry4, industry5=industry5, city1=city1, city2=city2,
                                          city3=city3, min_salary=min_salary, max_salary=max_salary)
+
+        #Educations
+        educations = json.loads(profile_data.get('educations'))
+        for education in educations:
+            school = education.get('school')
+            city = education.get('city')
+            education_level = education.get('education_level')
+            title = education.get('title')
+            date_of_graduation = education.get('date_of_graduation')
+            Education.objects.create(profiles=profile, school=school, city=city, education_level=education_level,
+                                     title=title, date_of_graduation=date_of_graduation)
+        # Scholarships
+        scholarships = json.loads(profile_data.get('scholarships'))
+        for scholarship in scholarships:
+            name = scholarship.get('name')
+            date = scholarship.get('date')
+
+            Scholarship.objects.create(profiles=profile, name=name, date=date)
+
+        # Employments
+        employments = json.loads(profile_data.get('employments'))
+        for employment in employments:
+            company_name = employment.get('company_name')
+            city = employment.get('city')
+            from_date = employment.get('from_date')
+            to_date = employment.get('to_date')
+            achievements = employment.get('achievements')
+
+            Employement.objects.create(profiles=profile, company_name=company_name, city=city, from_date=from_date,
+                                       to_date=to_date, achievements=achievements)
+
+
+        # References
+        references = json.loads(profile_data.get('references'))
+        for reference in references:
+            first_name = reference.get('first_name')
+            relationship = reference.get('relationship')
+            phone = reference.get('phone')
+            email = reference.get('email')
+
+            Reference.objects.create(profiles=profile, first_name=first_name, relationship=relationship,
+                                       phone=phone, email=email)
+
+        # Skills
+        skills = json.loads(profile_data.get('skills'))
+        for skill in skills:
+            name = skill.get('name')
+            value = skill.get('value')
+
+            Skill.objects.create(profiles=profile, name=name, value=value)
+
+        # Language
+        languages = json.loads(profile_data.get('languages'))
+        for language in languages:
+            name = language.get('name')
+            value = language.get('value')
+
+            Language.objects.create(profiles=profile, name=name, value=value)
+
+        # Programming
+        programmings = json.loads(profile_data.get('programmings'))
+        for programming in programmings:
+            name = programming.get('name')
+            value = programming.get('value')
+
+            Programming.objects.create(profiles=profile, name=name, value=value)
+
+        # Design
+        designs = json.loads(profile_data.get('designs'))
+        for design in designs:
+            name = design.get('name')
+            value = design.get('value')
+
+            Design.objects.create(profiles=profile, name=name, value=value)
+
+        # Data
+        datas = json.loads(profile_data.get('datas'))
+        for data in datas:
+            name = data.get('name')
+            value = data.get('value')
+
+            Data.objects.create(profiles=profile, name=name, value=value)
         return Response(200)
+
