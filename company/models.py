@@ -28,15 +28,27 @@ class Company(models.Model):
 
 class Jobs(models.Model):
     company = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
-    job_title = models.CharField(max_length=30)
-    min_salary = models.IntegerField()
-    max_salary = models.IntegerField()
-    qualification = models.CharField(max_length=30)
-    description = models.TextField(max_length=500)
-    expiry = models.DateField()
+    job_title = models.CharField(max_length=30, default='Job Title')
+    industry = models.CharField(max_length=30, default='industry')
+    city = models.CharField(max_length=30, default='City')
+    country = models.CharField(max_length=30, default='Country')
+    salary = models.IntegerField(default=1000)
+    job_type = models.CharField(max_length=30, default='Job Type')
+    work_days = models.CharField(max_length=100, default='Work_days')
+    num_vacanices = models.IntegerField(default=1)
+    qualification = models.CharField(max_length=30, default='Qualification')
+    description = models.TextField(max_length=500, default='Description')
+    create_date = models.DateField(default=datetime.now)
+    expiry_date = models.DateField()
+    total_exp = models.IntegerField(default=1)
 
     def __str__(self):
         return self.job_title
+
+class Job_Skill(models.Model):
+    job = models.ForeignKey(Jobs, on_delete=models.DO_NOTHING, default=False)
+    skill = models.CharField(max_length=50)
+    experience = models.IntegerField()
 
 class Applicants(models.Model):
     user = models.ForeignKey(Users, on_delete=models.DO_NOTHING)

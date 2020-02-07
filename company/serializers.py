@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Users
+from .models import Company, Users, Jobs
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -12,4 +12,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Users
+        fields = '__all__'
+
+class JobSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Jobs
         fields = '__all__'
