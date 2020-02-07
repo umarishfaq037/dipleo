@@ -16,11 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include
 from django.conf import settings
-from user import views
+from user.views import UserProfile, UsersList
+from company.views import CompanyList
 from django.conf.urls import url
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^users/', views.UsersList.as_view()),
-    url(r'user_profile', views.UserProfile.as_view())
+    url(r'^users/', UsersList.as_view()),
+    url(r'user_profile', UserProfile.as_view()),
+    url(r'add_company', CompanyList.as_view())
 ]

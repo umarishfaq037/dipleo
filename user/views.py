@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserProfileSerializer
 from rest_framework.parsers import JSONParser
 import json
 
@@ -17,9 +17,13 @@ class UsersList(APIView):
 
 
 class UserProfile(APIView):
+    def get(self, request):
+        user_profile_list = Profile.objects.all()
+        serializer = UserProfileSerializer(user_profile_list, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
         profile_data = request.data
-        # print(profile_data)
         identification_type = profile_data.get('identification_type')
         identification_number = profile_data.get('identification_number')
         birth_date = profile_data.get('birth_date')
