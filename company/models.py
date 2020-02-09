@@ -47,8 +47,8 @@ class Jobs(models.Model):
 
 class Job_Skill(models.Model):
     job = models.ForeignKey(Jobs, on_delete=models.DO_NOTHING, default=False)
-    skill = models.CharField(max_length=50)
-    experience = models.IntegerField()
+    skill = models.CharField(max_length=50, default='Skill1')
+    experience = models.IntegerField(default = 5)
 
 class Applicants(models.Model):
     user = models.ForeignKey(Users, on_delete=models.DO_NOTHING)
