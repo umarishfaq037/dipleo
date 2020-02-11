@@ -50,6 +50,7 @@ class Job_Skill(models.Model):
     skill = models.CharField(max_length=50)
     experience = models.IntegerField()
 
+
 class Applicants(models.Model):
     user = models.ForeignKey(Users, on_delete=models.DO_NOTHING)
 

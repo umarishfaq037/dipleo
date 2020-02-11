@@ -4,6 +4,7 @@ from .models import Company, Users, Jobs, Job_Skill
 from .serializers import UserSerializer, CompanySerializer, JobSerializer
 from rest_framework.parsers import JSONParser
 import json
+from django.core import serializers
 
 class CompanyList(APIView):
     def get(self, request):
@@ -84,4 +85,30 @@ class JobList(APIView):
             tech = skill.get('skill')
             exp = skill.get('exp')
             Job_Skill.objects.create(job=job, skill=tech, exp=exp)
+        
+        return Response(200)
+
+
+class JobSearch(APIView):
+    def get(self, request):
+        job_list = Jobs.objects.all()
+        serializer = JobSerializer(job_list, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        job_list = request.data
+        title = job_list.get('job_title')
+        city = job_list.get('city')
+        industry = job_list.get('industry')
+        total_exp = job_list.get('total_exp')
+        salary = job_list.get('salary')
+        job_type = job_list.get('job_type')
+
+        abc = Jobs.objects.filter(job_title=title, city=city, industry=industry, total_exp=total_exp, 
+                            salary=salary, job_type=job_type)
+        
+        response = serializers.serialize('json', abc)
+
+        print(response)
+        return Response(response, content_type='application/json')
 

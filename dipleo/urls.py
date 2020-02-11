@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import include
 from django.conf import settings
 from user.views import UserProfile, UsersList
-from company.views import CompanyList, JobList
+from company.views import CompanyList, JobList, JobSearch
 from django.conf.urls import url
 
 urlpatterns = [
@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^users/', UsersList.as_view()),
     url(r'user_profile', UserProfile.as_view()),
     url(r'add_company', CompanyList.as_view()),
-    url(r'add_job', JobList.as_view())
+    url(r'add_job', JobList.as_view()),
+    url(r'job_search', JobSearch.as_view())
 ]
