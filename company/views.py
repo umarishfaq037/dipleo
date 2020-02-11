@@ -84,7 +84,6 @@ class JobList(APIView):
         for skill in skills:
             tech = skill.get('skill')
             exp = skill.get('exp')
-<<<<<<< HEAD
             Job_Skill.objects.create(job=job, skill=tech, exp=exp)
         
         return Response(200)
@@ -110,9 +109,6 @@ class JobSearch(APIView):
         
         response = serializers.serialize('json', abc)
 
-        print(response)
+        #print(response)
         return Response(response, content_type='application/json')
-=======
-            Job_Skill.objects.create(job=job, skill=tech, experience=exp)
->>>>>>> 67e05a4523c01c480f803d6c47175a6af438d6cb
 
