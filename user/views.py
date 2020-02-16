@@ -7,8 +7,8 @@ import json
 
 class Login(APIView):
     def get(self, request):
-        user = Users.objects.all()
-        return Response(user[0].username)
+        user = Profile.objects(users_id=32).update(users_id=1)
+        return Response(user.users_id)
 
 
     def post(self, request):
@@ -20,13 +20,16 @@ class Login(APIView):
             user = Users.objects.get(username=email, password=password, users_type=users_type)
             content = {}
             if user:
-                content = {"username": user.username, "type": user.users_type, "status": 200}
+                profile = Profile.objects.get(users_id=user.id)
+                content = {"username": user.username, "type": user.users_type, "user_id": profile.id, "status": 200}
             else:
                 content = {"error": "Wrong Email or Password"}
         except Exception as e:
+            print(str(e))
             content = {"error": "Wrong Email or Password"}
 
         return Response(content)
+
 
 class UsersList(APIView):
     def get(self, request):

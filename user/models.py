@@ -131,3 +131,6 @@ class UserInterestedJobs(models.Model):
     job = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='job')
     is_interested = models.BooleanField()
     comment = models.TextField()
+
+class SavedJobs(models.Model):
+    pass
