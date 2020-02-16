@@ -5,6 +5,28 @@ from .serializers import UserSerializer, UserProfileSerializer
 from rest_framework.parsers import JSONParser
 import json
 
+class Login(APIView):
+    def get(self, request):
+        user = Users.objects.all()
+        return Response(user[0].username)
+
+
+    def post(self, request):
+        try:
+            profile_data = request.data
+            email = profile_data.get('email')
+            password = profile_data.get('password')
+            users_type = profile_data.get('type')
+            user = Users.objects.get(username=email, password=password, users_type=users_type)
+            content = {}
+            if user:
+                content = {"username": user.username, "type": user.users_type, "status": 200}
+            else:
+                content = {"error": "Wrong Email or Password"}
+        except Exception as e:
+            content = {"error": "Wrong Email or Password"}
+
+        return Response(content)
 
 class UsersList(APIView):
     def get(self, request):
