@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
+from company.models import *
 from .serializers import UserSerializer, UserProfileSerializer
 from rest_framework.parsers import JSONParser
 import json
@@ -20,8 +21,14 @@ class Login(APIView):
             user = Users.objects.get(username=email, password=password, users_type=users_type)
             content = {}
             if user:
-                profile = Profile.objects.get(users_id=user.id)
-                content = {"username": user.username, "type": user.users_type, "user_id": profile.id, "status": 200}
+                user_id = ""
+                if user.users_type == "Seeker":
+                    profile = Profile.objects.get(users_id=user.id)
+                    user_id = profile.id
+                if user.users_type == "company":
+                    profile = Company.objects.get(user_id=user.id)
+                    user_id = profile.id
+                content = {"username": user.username, "type": user.users_type, "user_id": user_id, "status": 200}
             else:
                 content = {"error": "Wrong Email or Password"}
         except Exception as e:
@@ -182,3 +189,10 @@ class UserProfile(APIView):
             Data.objects.create(profiles=profile, name=name, value=value)
         return Response(200)
 
+class ApplyJobs(APIView):
+    def get(self, request):
+        pass
+
+
+    def post(self, request):
+        pass

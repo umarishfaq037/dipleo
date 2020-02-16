@@ -1,18 +1,6 @@
 from django.db import models
-#from company.models import Jobs
-class Users(models.Model):
-    username = models.CharField(max_length=20)
-    password = models.CharField(max_length=20)
-    
-    USER_TYPE = (
-    ('Seeker', 'Seeker'),
-    ('company', 'company'),
-)
-    users_type = models.CharField(max_length=10, choices=USER_TYPE)
-    objects = models.Manager()
-
-    def __str__(self):
-        return self.username
+from company.models import Jobs
+from dipleo.models import Users
 
 
 class Profile(models.Model):
@@ -126,11 +114,24 @@ class Data(models.Model):
     name = models.CharField(max_length=100)
     value = models.IntegerField()
 
-class UserInterestedJobs(models.Model):
-    profiles = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
-    job = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, related_name='job')
-    is_interested = models.BooleanField()
-    comment = models.TextField()
 
-class SavedJobs(models.Model):
-    pass
+# class UserInterestedJobs(models.Model):
+#     profiles = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+#     job = models.ForeignKey(Jobs, on_delete=models.DO_NOTHING, related_name='job')
+#     is_interested = models.BooleanField()
+#     comment = models.TextField()
+
+
+class SavedJob(models.Model):
+    profiles = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+    job = models.ForeignKey(Jobs, on_delete=models.DO_NOTHING)
+
+
+class ApplyJob(models.Model):
+    profiles = models.ForeignKey(Profile, on_delete=models.DO_NOTHING)
+    job = models.ForeignKey(Jobs, on_delete=models.DO_NOTHING)
+    is_seen = models.BooleanField(default=False)
+    is_evaluation = models.BooleanField(default=False)
+    is_interview = models.BooleanField(default=False)
+    is_offer = models.BooleanField(default=False)
+
