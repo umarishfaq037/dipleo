@@ -21,14 +21,7 @@ class Login(APIView):
             user = Users.objects.get(username=email, password=password, users_type=users_type)
             content = {}
             if user:
-                user_id = ""
-                if user.users_type == "Seeker":
-                    profile = Profile.objects.get(users_id=user.id)
-                    user_id = profile.id
-                if user.users_type == "company":
-                    profile = Company.objects.get(user_id=user.id)
-                    user_id = profile.id
-                content = {"username": user.username, "type": user.users_type, "user_id": user_id, "status": 200}
+                content = {"username": user.username, "type": user.users_type, "user_id": user.id, "status": 200}
             else:
                 content = {"error": "Wrong Email or Password"}
         except Exception as e:
@@ -191,8 +184,35 @@ class UserProfile(APIView):
 
 class ApplyJobs(APIView):
     def get(self, request):
-        pass
-
+        user_data = request.data
+        user_id = user_data.get('user_id')
+        # user = Users.objects.get(user_id=user_id)
+        all_applied_jobs = ApplyJob.objects.filter(user_id=user_id)
+        return Response(all_applied_jobs)
 
     def post(self, request):
-        pass
+        user_data = request.data
+        user_id = user_data.get('user_id')
+        job_id = user_data.get('job_id')
+        comment = user_data.get('comment')
+        user = Users.objects.filter(id=user_id)
+        job = Jobs.objects.filter(id=job_id)
+        ApplyJob.objects.create(user=user[0], job=job[0], comment=comment)
+        return Response(200)
+
+
+class SavedJobs(APIView):
+    def get(self, request):
+        user_data = request.data
+        user_id = user_data.get('user_id')
+        all_applied_jobs = SavedJob.objects.filter(user_id=user_id)
+        return Response(all_applied_jobs)
+
+    def post(self, request):
+        user_data = request.data
+        user_id = user_data.get('user_id')
+        job_id = user_data.get('job_id')
+        user = Users.objects.filter(id=user_id)
+        job = Jobs.objects.filter(id=job_id)
+        SavedJob.objects.create(user=user[0], job=job[0])
+        return Response(200)

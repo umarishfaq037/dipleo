@@ -1,5 +1,5 @@
 from django.db import models
-from dipleo.models import Users
+from user.models import Users
 from datetime import datetime
 
 class Company(models.Model):
