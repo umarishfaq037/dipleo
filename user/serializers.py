@@ -23,3 +23,9 @@ class SaveJobsSerializer(serializers.ModelSerializer):
     class Meta:
         model = SavedJob
         fields = '__all__'
+
+class ApplyJobsSerializer(serializers.ModelSerializer):
+    job = JobSerializer(read_only=True)
+    class Meta:
+        model = ApplyJob
+        fields = '__all__'

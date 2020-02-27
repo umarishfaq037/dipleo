@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
 from company.models import *
-from .serializers import UserSerializer, UserProfileSerializer, SaveJobsSerializer
+from .serializers import *
 from rest_framework.parsers import JSONParser
 import json
 
@@ -187,8 +187,8 @@ class ApplyJobs(APIView):
         user_data = request.data
         user_id = user_data.get('user_id')
         all_applied_jobs = ApplyJob.objects.filter(user_id=user_id)
-        # serializer = JobSerializer(job_list, many=True)
-        return Response(all_applied_jobs)
+        serializer = ApplyJobsSerializer(all_applied_jobs, many=True)
+        return Response(serializer)
 
     def post(self, request):
         user_data = request.data
