@@ -84,7 +84,7 @@ class JobList(APIView):
         for skill in skills:
             tech = skill.get('skill')
             exp = skill.get('exp')
-            Job_Skill.objects.create(job=job, skill=tech, exp=exp)
+            Job_Skill.objects.create(job=job, skill=tech, experience=exp)
         
         return Response(200)
 
