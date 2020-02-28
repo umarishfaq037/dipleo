@@ -190,7 +190,7 @@ class ApplyJobs(APIView):
         user_id = user_data.get('user_id')
         all_applied_jobs = ApplyJob.objects.filter(user_id=user_id)
         serializer = ApplyJobsSerializer(all_applied_jobs, many=True)
-        return Response(serializer)
+        return Response(serializer.data)
 
     def post(self, request):
         user_data = request.data
@@ -222,7 +222,7 @@ class SavedJobs(APIView):
 
 
 class showTopJobs(APIView):
-    def get(self, request):
+    def get(self, request): 
         top_scores = (Jobs.objects
                      .order_by('-id')
                      .values_list('id', flat=True)
