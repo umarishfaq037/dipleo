@@ -104,9 +104,10 @@ class JobSearch(APIView):
         salary = job_list.get('salary')
         job_type = job_list.get('job_type')
 
+
         abc = Jobs.objects.filter(job_title=title, city=city, industry=industry, total_exp=total_exp, 
                             salary=salary, job_type=job_type)
-        
+
         response = serializers.serialize('json', abc)
 
         #print(response)
