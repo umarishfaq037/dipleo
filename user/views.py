@@ -233,3 +233,23 @@ class showTopJobs(APIView):
         #job = Jobs.objects.all()
         serializer = JobSerializer(job, many=True)
         return Response(serializer.data)
+
+
+class ChangePassword(APIView):
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        user_data = request.data
+        user_id = user_data.get('user_id')
+        old_password = user_data.get('old_password')
+        new_password = user_data.get('new_password')
+        re_new_password = user_data.get('re_new_password')
+        user_profile = Users.objects.filter(id=user_id, password=old_password)
+        if user_profile and new_password == re_new_password:
+            Users.objects.filter(id=user_id).update(password=new_password)
+            return Response(200)
+        elif user_profile and new_password != re_new_password:
+            return Response("Password Doesn't Match")
+        else:
+            return Response("No User Found with this id and password")

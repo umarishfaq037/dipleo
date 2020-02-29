@@ -16,8 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include
 from django.conf import settings
-from user.views import UserProfile, UsersList, Login, ApplyJobs, SavedJobs, showTopJobs
-from company.views import CompanyList, JobList, JobSearch
+from user.views import *
+from company.views import *
 from django.conf.urls import url
 
 urlpatterns = [
@@ -35,5 +35,6 @@ urlpatterns = [
     url(r'save_jobs', SavedJobs.as_view()),
     url(r'save_jobs/<int:user_id>', SavedJobs.as_view()),
     url(r'top_jobs', showTopJobs.as_view()),
+    url(r'change_password', ChangePassword.as_view())
 
 ]
