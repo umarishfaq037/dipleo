@@ -5,6 +5,8 @@ from company.models import *
 from .serializers import *
 from rest_framework.parsers import JSONParser
 import json
+from django.db.models import Count
+
 
 class Login(APIView):
     def get(self, request):
@@ -188,7 +190,7 @@ class ApplyJobs(APIView):
         user_id = user_data.get('user_id')
         all_applied_jobs = ApplyJob.objects.filter(user_id=user_id)
         serializer = ApplyJobsSerializer(all_applied_jobs, many=True)
-        return Response(serializer)
+        return Response(serializer.data)
 
     def post(self, request):
         user_data = request.data
@@ -217,3 +219,15 @@ class SavedJobs(APIView):
         job = Jobs.objects.filter(id=job_id)
         SavedJob.objects.create(user=user[0], job=job[0])
         return Response(200)
+
+
+class showTopJobs(APIView):
+    def get(self, request): 
+        top_scores = (Jobs.objects
+                     .order_by('-id')
+                     .values_list('id', flat=True)
+                     .distinct())
+        job = Jobs.objects.order_by('id').filter(id__in=top_scores[:4])
+        #job = Jobs.objects.all()
+        serializer = JobSerializer(job, many=True)
+        return Response(serializer.data)
