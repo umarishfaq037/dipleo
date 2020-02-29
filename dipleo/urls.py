@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'login', Login.as_view()),
     url(r'add_company', CompanyList.as_view()),
     url(r'add_job', JobList.as_view()),
+    url(r'add_job/<int:job_id>', JobList.as_view()),
     url(r'job_search', JobSearch.as_view()),
     url(r'apply_jobs', ApplyJobs.as_view()),
     url(r'apply_jobs/<int:user_id>', ApplyJobs.as_view()),

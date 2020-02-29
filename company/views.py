@@ -48,8 +48,10 @@ class CompanyList(APIView):
 
 class JobList(APIView):
     def get(self, request):
-        job_list = Jobs.objects.all()
-        serializer = JobSerializer(job_list, many=True)
+        user_data = request.query_params
+        job_id = user_data.get('job_id')
+        job_profile = Jobs.objects.filter(id=job_id)
+        serializer = JobSerializer(job_profile, many=True)
         return Response(serializer.data)
 
     def post(self, request):
