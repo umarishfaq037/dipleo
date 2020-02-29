@@ -45,8 +45,10 @@ class UsersList(APIView):
 
 class UserProfile(APIView):
     def get(self, request):
-        user_profile_list = Profile.objects.all()
-        serializer = UserProfileSerializer(user_profile_list, many=True)
+        user_data = request.query_params
+        user_id = user_data.get('user_id')
+        user_profile = Profile.objects.filter(user_id=user_id)
+        serializer = UserProfileSerializer(user_profile, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -193,7 +195,7 @@ class ApplyJobs(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        user_data = request.data
+        user_data = request.query_params
         user_id = user_data.get('user_id')
         job_id = user_data.get('job_id')
         comment = user_data.get('comment')

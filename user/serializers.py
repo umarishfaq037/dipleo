@@ -11,7 +11,53 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class EducationSerializer(serializers.ModelSerializer):
+    model = Education
+    fields = '__all__'
+
+
+class ScholarshipSerializer(serializers.ModelSerializer):
+    model = Scholarship
+    fields = '__all__'
+
+
+class ReferenceSerializer(serializers.ModelSerializer):
+    model = Reference
+    fields = '__all__'
+
+
+class SkillSerializer(serializers.ModelSerializer):
+    model = Skill
+    fields = '__all__'
+
+
+class LanguageSerializer(serializers.ModelSerializer):
+    model = Language
+    fields = '__all__'
+
+class ProgrammingSerializer(serializers.ModelSerializer):
+    model = Programming
+    fields = '__all__'
+
+
+class DesignSerializer(serializers.ModelSerializer):
+    model = Design
+    fields = '__all__'
+
+
+class DataSerializer(serializers.ModelSerializer):
+    model = Data
+    fields = '__all__'
+
 class UserProfileSerializer(serializers.ModelSerializer):
+    education = EducationSerializer(read_only=True)
+    scholarship = ScholarshipSerializer(read_only=True)
+    reference = ReferenceSerializer(read_only=True)
+    skill = SkillSerializer(read_only=True)
+    language = LanguageSerializer(read_only=True)
+    programming = ProgrammingSerializer(read_only=True)
+    design = DesignSerializer(read_only=True)
+    data = DataSerializer(read_only=True)
 
     class Meta:
         model = Profile
