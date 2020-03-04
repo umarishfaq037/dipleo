@@ -90,7 +90,7 @@ class UserProfile(APIView):
         max_salary = profile_data.get('max_salary')
 
         user = Users.objects.create(username=email, password=password, users_type='Seeker')
-        profile = Profile.objects.create(users=user,
+        profile = Profile.objects.create(user=user,
                                          identification_type=identification_type,
                                          identification_number=identification_number, birth_date=birth_date,
                                          name=name, surname=surname, gender=gender, email=email,
