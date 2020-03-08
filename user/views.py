@@ -47,7 +47,10 @@ class UserProfile(APIView):
     def get(self, request):
         user_data = request.query_params
         user_id = user_data.get('user_id')
-        user_profile = Profile.objects.filter(user_id=user_id)
+        if user_id == None:
+            user_profile = Profile.objects.all()
+        else:
+            user_profile = Profile.objects.filter(user_id=user_id)
         serializer = UserProfileSerializer(user_profile, many=True)
         return Response(serializer.data)
 
