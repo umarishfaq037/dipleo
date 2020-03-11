@@ -79,7 +79,7 @@ class ApplyJobsSerializer(serializers.ModelSerializer):
 
 
 class CandidateApplyJobsSerializer(serializers.ModelSerializer):
-    candiate = Profile(read_only=True)
+    candiate = UserProfileSerializer(read_only=True)
     class Meta:
         model = ApplyJob
         fields = '__all__'
