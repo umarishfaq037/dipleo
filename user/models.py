@@ -149,5 +149,7 @@ class ApplyJob(models.Model):
     is_evaluation = models.BooleanField(default=False)
     is_interview = models.BooleanField(default=False)
     is_offer = models.BooleanField(default=False)
+    appointment_date = models.DateTimeField(default=False)
+
     def __str__(self):
         return self.job

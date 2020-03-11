@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Company, Users, Jobs, Job_Skill
+from user.models import ApplyJob
 from .serializers import UserSerializer, CompanySerializer, JobSerializer
 from rest_framework.parsers import JSONParser
 import json
@@ -70,7 +71,6 @@ class JobList(APIView):
         expiry_date = profile_data.get('expiry_date')
         total_exp = profile_data.get('total_exp')
         company_id = profile_data.get('company_id')
-        print(company_id)
 
         company = Company.objects.get(id=company_id)
 
@@ -90,6 +90,32 @@ class JobList(APIView):
         
         return Response(200)
 
+
+class CompanyJobs(APIView):
+
+    def get(self, request):
+        user_data = request.query_params
+        company_id = user_data.get('company_id')
+        job_profile = Jobs.objects.filter(company_id=company_id)
+        serializer = JobSerializer(job_profile, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        pass
+
+class CreateAppointment(APIView):
+
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        user_data = request.data
+        apply_job_id = user_data.get('apply_job_id')
+        appointment_date = user_data.get('appointment_date')
+        job_profile = ApplyJob.objects.filter(id=apply_job_id).update(appointment_date=appointment_date)
+        if not job_profile:
+            return Response(500)
+        return Response(200)
 
 class JobSearch(APIView):
     def get(self, request):
