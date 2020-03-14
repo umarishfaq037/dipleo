@@ -92,7 +92,6 @@ class JobList(APIView):
 
 
 class CompanyJobs(APIView):
-
     def get(self, request):
         user_data = request.query_params
         company_id = user_data.get('company_id')

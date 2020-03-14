@@ -213,7 +213,7 @@ class ApplyJobs(APIView):
 
 class CandidateApplyJobs(APIView):
     def get(self, request):
-        user_data = request.data
+        user_data = request.query_params
         job_id = user_data.get('job_id')
         all_candidates_applied_jobs = ApplyJob.objects.filter(job_id=job_id)
         serializer = CandidateApplyJobsSerializer(all_candidates_applied_jobs, many=True)
