@@ -270,3 +270,25 @@ class ChangePassword(APIView):
             return Response("Password Doesn't Match")
         else:
             return Response("No User Found with this id and password")
+
+
+class candidate_intro(APIView):
+    def get(self, request):
+        candidates_intro = CandidateIntro.objects.all()
+        serializer = CandidateIntroSerializer(candidates_intro, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        user_data = request.data
+        video_link = user_data.get('video_link')
+        question = user_data.get('question')
+
+        user_id = user_data.get('user_id')
+
+        user = Company.objects.get(id=user_id)
+
+        user_profile = Users.objects.create(user=user, video_link=video_link, question=question)
+
+        #serializer = CandidateIntroSerializer(user_profile, many=True)
+        
+        return Response(200)

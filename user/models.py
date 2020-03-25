@@ -137,12 +137,12 @@ class Data(models.Model):
 
 
 class SavedJob(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     job = models.ForeignKey('company.Jobs', on_delete=models.DO_NOTHING)
 
 
 class ApplyJob(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     job = models.ForeignKey('company.Jobs', on_delete=models.DO_NOTHING)
     comment = models.TextField()
     is_seen = models.BooleanField(default=False)
@@ -153,3 +153,9 @@ class ApplyJob(models.Model):
 
     def __str__(self):
         return self.job
+
+
+class CandidateIntro(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    video_link = models.CharField(max_length=200)
+    question = models.CharField(max_length=300)

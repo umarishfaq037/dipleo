@@ -10,6 +10,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = Users
         fields = '__all__'
 
+class CandidateIntroSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CandidateIntro
+        fields = '__all__'
 
 class EducationSerializer(serializers.ModelSerializer):
     model = Education
