@@ -198,7 +198,7 @@ class ApplyJobs(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        user_data = request.query_params
+        user_data = request.data
         user_id = user_data.get('user_id')
         job_id = user_data.get('job_id')
         comment = user_data.get('comment')
