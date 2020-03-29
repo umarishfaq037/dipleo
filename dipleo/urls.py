@@ -39,6 +39,6 @@ urlpatterns = [
     url(r'create_appointment', CreateAppointment.as_view()),
     url(r'top_jobs', showTopJobs.as_view()),
     url(r'candidate_intro', candidate_intro.as_view())
-    #url(r'', ChangePassword.as_view())
+    url(r'', ChangePassword.as_view())
 
 ]
