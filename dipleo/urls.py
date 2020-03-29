@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'candidate_applied', CandidateApplyJobs.as_view()),
     url(r'create_appointment', CreateAppointment.as_view()),
     url(r'top_jobs', showTopJobs.as_view()),
-    url(r'candidate_intro', candidate_intro.as_view())
-    url(r'', ChangePassword.as_view())
+    url(r'candidate_intro', candidate_intro.as_view()),
+    url(r'change_password', ChangePassword.as_view())
 
 ]
