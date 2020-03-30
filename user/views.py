@@ -19,8 +19,8 @@ class Login(APIView):
             profile_data = request.data
             email = profile_data.get('email')
             password = profile_data.get('password')
-            users_type = profile_data.get('type')
-            user = Users.objects.get(username=email, password=password, users_type=users_type)
+            # users_type = profile_data.get('type')
+            user = Users.objects.get(username=email, password=password)
             content = {}
             if user:
                 content = {"username": user.username, "type": user.users_type, "user_id": user.id, "status": 200}
