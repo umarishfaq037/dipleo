@@ -51,7 +51,15 @@ class JobList(APIView):
     def get(self, request):
         user_data = request.query_params
         job_id = user_data.get('job_id')
-        job_profile = Jobs.objects.filter(id=job_id)
+        company_id = user_data.get('company_id')
+        if job_id and company_id:
+            job_profile = Jobs.objects.filter(id=job_id, company= company_id)
+        elif job_id:
+            job_profile = Jobs.objects.filter(id=job_id)
+        elif company_id:
+            job_profile = Jobs.objects.filter(company= company_id)
+        else:
+            job_profile = Jobs.objects.all()
         serializer = JobSerializer(job_profile, many=True)
         return Response(serializer.data)
 
