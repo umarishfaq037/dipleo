@@ -21,14 +21,18 @@ class Login(APIView):
             password = profile_data.get('password')
             # users_type = profile_data.get('type')
             user = Users.objects.get(username=email, password=password)
-            content = {}
             if user:
-                content = {"username": user.username, "type": user.users_type, "user_id": user.id, "status": 200}
+                if user.users_type == 'Seeker':
+                    profile = Profile.objects.get(user=user)
+                    content = {"username": user.username, "type": user.users_type, "user_id": user.id, "firstname": profile.name, "surname": profile.surname, "status": 200}
+                else:
+                    profile = Company.objects.get(user=user)
+                    content = {"username": user.username, "type": user.users_type, "user_id": user.id, "founder_name": profile.founder_name, "company_id": profile.id, "company_name": profile.name, "status": 200}
             else:
                 content = {"error": "Wrong Email or Password"}
         except Exception as e:
             print(str(e))
-            content = {"error": "Wrong Email or Password"}
+            content = {"error": "Error"}
 
         return Response(content)
 
