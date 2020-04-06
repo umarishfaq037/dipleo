@@ -33,7 +33,6 @@ class Login(APIView):
         except Exception as e:
             print(str(e))
             content = {"error": "Error"}
-
         return Response(content)
 
 
