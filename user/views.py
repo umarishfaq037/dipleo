@@ -194,7 +194,7 @@ class UserProfile(APIView):
 
 class ApplyJobs(APIView):
     def get(self, request):
-        user_data = request.data
+        user_data = request.query_params
         user_id = user_data.get('user_id')
         all_applied_jobs = ApplyJob.objects.filter(user_id=user_id)
         serializer = ApplyJobsSerializer(all_applied_jobs, many=True)
