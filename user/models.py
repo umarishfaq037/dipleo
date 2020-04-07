@@ -142,8 +142,9 @@ class SavedJob(models.Model):
 
 
 class ApplyJob(models.Model):
-    user = models.ForeignKey(Users, on_delete=models.CASCADE)
-    job = models.ForeignKey('company.Jobs', on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    job = models.ForeignKey('company.Jobs', on_delete=models.CASCADE)
+    company = models.ForeignKey('company.Company', null = True, on_delete=models.CASCADE)
     comment = models.TextField()
     is_seen = models.BooleanField(default=False)
     is_evaluation = models.BooleanField(default=False)

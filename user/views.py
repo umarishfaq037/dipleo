@@ -50,7 +50,7 @@ class UserProfile(APIView):
     def get(self, request):
         user_data = request.query_params
         user_id = user_data.get('user_id')
-        if user_id == None:
+        if user_id:
             user_profile = Profile.objects.all()
         else:
             user_profile = Profile.objects.filter(user_id=user_id)
@@ -195,30 +195,31 @@ class UserProfile(APIView):
 class ApplyJobs(APIView):
     def get(self, request):
         user_data = request.query_params
-        user_id = user_data.get('user_id')
-        all_applied_jobs = ApplyJob.objects.filter(user_id=user_id)
+        company_id = user_data.get('company_id')
+        all_applied_jobs = ApplyJob.objects.filter(company_id = company_id)
         serializer = ApplyJobsSerializer(all_applied_jobs, many=True)
         return Response(serializer.data)
 
     def post(self, request):
         user_data = request.data
         user_id = user_data.get('user_id')
+        user = Users.objects.get(id = user_id)
+        profile = Profile.objects.filter(user_id=user_id)
         job_id = user_data.get('job_id')
         comment = user_data.get('comment')
         user = Users.objects.filter(id=user_id)
-        job = Jobs.objects.filter(id=job_id)
-        if user and job:
-            ApplyJob.objects.create(user=user[0], job=job[0], comment=comment)
-        else:
-            return Response(500)
+        #profile = Profile.objects
+        job = Jobs.objects.get(id=job_id)
+        print(job)
+        company = job.company
+        ApplyJob.objects.create(user= profile[0], job=job, comment=comment, company= company)
         return Response(200)
 
 
 class CandidateApplyJobs(APIView):
     def get(self, request):
         user_data = request.query_params
-        job_id = user_data.get('job_id')
-        all_candidates_applied_jobs = ApplyJob.objects.filter(job_id=job_id)
+        all_candidates_applied_jobs = ApplyJob.objects.all()
         serializer = CandidateApplyJobsSerializer(all_candidates_applied_jobs, many=True)
         return Response(serializer.data)
 
