@@ -39,6 +39,10 @@ urlpatterns = [
     url(r'create_appointment', CreateAppointment.as_view()),
     url(r'top_jobs', showTopJobs.as_view()),
     url(r'candidate_intro', candidate_intro.as_view()),
-    url(r'change_password', ChangePassword.as_view())
+    url(r'change_password', ChangePassword.as_view()),
+    url(r'update_application_status', UpdateApplicationStatus.as_view()),
+    url(r'user_notifications', UserNotifications.as_view()),
+    url(r'user_notifications/<int:user_id>', UserNotifications.as_view()),
+    url(r'user_settings', UserSettings.as_view()),
 
 ]

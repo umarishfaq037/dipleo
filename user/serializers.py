@@ -91,3 +91,13 @@ class CandidateApplyJobsSerializer(serializers.ModelSerializer):
         model = ApplyJob
         depth = 2
         fields = '__all__'
+
+class NotificationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notifications
+        fields = '__all__'
+
+class SettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Settings
+        fields = '__all__'
