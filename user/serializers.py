@@ -89,7 +89,6 @@ class CandidateApplyJobsSerializer(serializers.ModelSerializer):
     candiate = UserProfileSerializer(read_only=True)
     class Meta:
         model = ApplyJob
-        depth = 2
         fields = '__all__'
 
 class NotificationsSerializer(serializers.ModelSerializer):

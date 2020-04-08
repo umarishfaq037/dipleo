@@ -218,9 +218,7 @@ class ApplyJobs(APIView):
         job_id = user_data.get('job_id')
         comment = user_data.get('comment')
         user = Users.objects.filter(id=user_id)
-        #profile = Profile.objects
         job = Jobs.objects.get(id=job_id)
-        print(job)
         company = job.company
         ApplyJob.objects.create(user= profile[0], job=job, comment=comment, company= company)
         return Response(200)
@@ -337,10 +335,11 @@ class UserNotifications(APIView):
         user_data = request.query_params
         user_id = user_data.get('user_id')
         user = Users.objects.get(id=user_id)
-        notifications = Notifications.objects.filter(user=user, is_read=False)
+        notifications = Notifications.objects.filter(user=user, is_read= False)
         serializer = NotificationsSerializer(notifications, many=True)
+        response = Response(serializer.data)
         Notifications.objects.filter(user=user, is_read=False).update(is_read=True)
-        return Response(serializer.data)
+        return response
 
     def post(self, request):
 
