@@ -335,10 +335,11 @@ class UserNotifications(APIView):
         user_data = request.query_params
         user_id = user_data.get('user_id')
         user = Users.objects.get(id=user_id)
-        notifications = Notifications.objects.filter(user=user, is_read=False)
+        notifications = Notifications.objects.filter(user=user, is_read= False)
         serializer = NotificationsSerializer(notifications, many=True)
+        response = Response(serializer.data)
         Notifications.objects.filter(user=user, is_read=False).update(is_read=True)
-        return Response(serializer.data)
+        return response
 
     def post(self, request):
 
