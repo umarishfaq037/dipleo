@@ -215,9 +215,7 @@ class ApplyJobs(APIView):
         job_id = user_data.get('job_id')
         comment = user_data.get('comment')
         user = Users.objects.filter(id=user_id)
-        #profile = Profile.objects
         job = Jobs.objects.get(id=job_id)
-        print(job)
         company = job.company
         ApplyJob.objects.create(user= profile[0], job=job, comment=comment, company= company)
         return Response(200)
