@@ -10,9 +10,9 @@ from django.db.models import Count
 
 class Login(APIView):
     def get(self, request):
-        user = Profile.objects(users_id=32).update(users_id=1)
-        return Response(user.users_id)
-
+        # user = Profile.objects(users_id=32).update(users_id=1)
+        # return Response(user.users_id)
+        pass
 
     def post(self, request):
         try:
@@ -96,6 +96,7 @@ class UserProfile(APIView):
         max_salary = profile_data.get('max_salary')
 
         user = Users.objects.create(username=email, password=password, users_type='Seeker')
+
         profile = Profile.objects.create(user=user,
                                          identification_type=identification_type,
                                          identification_number=identification_number, birth_date=birth_date,
@@ -190,6 +191,8 @@ class UserProfile(APIView):
             value = data.get('value')
 
             Data.objects.create(profiles=profile, name=name, value=value)
+
+        Settings.objects.create(user=user, user_status='looking_for_a_job')
         return Response(200)
 
 class ApplyJobs(APIView):
@@ -300,4 +303,84 @@ class candidate_intro(APIView):
 
         #serializer = CandidateIntroSerializer(user_profile, many=True)
         
+        return Response(200)
+
+class UpdateApplicationStatus(APIView):
+    def get(self, request):
+        pass
+
+    def post(self, request):
+
+        user_data = request.data
+        is_seen = user_data.get('is_seen')
+        is_evaluation = user_data.get('is_evaluation')
+        is_interview = user_data.get('is_interview')
+        is_offer = user_data.get('is_offer')
+        apply_job_id = user_data.get('apply_job_id')
+        if is_seen:
+            ApplyJob.objects.filter(id=apply_job_id).update(is_seen=is_seen)
+        if is_evaluation:
+            ApplyJob.objects.filter(id=apply_job_id).update(is_evaluation=is_evaluation)
+        if is_interview:
+            ApplyJob.objects.filter(id=apply_job_id).update(is_interview=is_interview)
+        if is_offer:
+            ApplyJob.objects.filter(id=apply_job_id).update(is_offer=is_offer)
+
+        return Response(200)
+
+
+class UserNotifications(APIView):
+
+    def get(self, request):
+        user_data = request.query_params
+        user_id = user_data.get('user_id')
+        user = Users.objects.get(id=user_id)
+        notifications = Notifications.objects.filter(user=user, is_read=False)
+        serializer = NotificationsSerializer(notifications, many=True)
+        Notifications.objects.filter(user=user, is_read=False).update(is_read=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+
+        user_data = request.data
+        user_id = user_data.get('user_id')
+        notification = user_data.get('notification')
+        user = Users.objects.get(id=user_id)
+        Notifications.objects.create(user=user, notification=notification)
+
+        return Response(200)
+
+class UserSettings(APIView):
+
+    def get(self, request):
+        user_data = request.query_params
+        user_id = user_data.get('user_id')
+        user = Users.objects.get(id=user_id)
+        settings = Settings.objects.filter(user=user)
+        serializer = SettingsSerializer(settings, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+
+        # pass
+        user_data = request.data
+        user_id = user_data.get('user_id')
+        print(user_id)
+        user = Users.objects.get(id=user_id)
+        Settings.objects.create(user=user, user_status='looking_for_a_job')
+
+        return Response(200)
+
+    def put(self, request):
+
+        user_data = request.data
+        user_id = user_data.get('user_id')
+        vacany_suggestions = user_data.get('vacany_suggestions')
+        application_status = user_data.get('application_status')
+        newsletter_promotions = user_data.get('newsletter_promotions')
+        user_status = user_data.get('user_status')
+        user = Users.objects.get(id=user_id)
+        Settings.objects.filter(user=user).update(vacany_suggestions=vacany_suggestions, application_status=application_status,
+                                newsletter_promotions=newsletter_promotions, user_status=user_status)
+
         return Response(200)

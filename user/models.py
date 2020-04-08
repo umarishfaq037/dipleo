@@ -160,3 +160,21 @@ class CandidateIntro(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     video_link = models.CharField(max_length=200)
     question = models.CharField(max_length=300)
+
+
+class Notifications(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    notification = models.TextField()
+    is_read = models.BooleanField(default=False)
+
+class Settings(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    vacany_suggestions = models.BooleanField(default=False, null=True)
+    application_status = models.BooleanField(default=False, null=True)
+    newsletter_promotions = models.BooleanField(default=False, null=True)
+    USER_STATUS = (
+        ('looking_for_a_job', 'Looking for a job'),
+        ('open_to_opportunities', 'Open to opportunities'),
+        ('inactive', 'inactive'),
+    )
+    user_status = models.CharField(max_length=30, choices=USER_STATUS)
