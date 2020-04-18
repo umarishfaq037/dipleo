@@ -2,6 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
 from company.models import *
+from user.password_generator import PasswordResetTokenGenerator
+from user.generate_email import send_email
 from .serializers import *
 from rest_framework.parsers import JSONParser
 import json
@@ -35,6 +37,51 @@ class Login(APIView):
             content = {"error": "Error"}
         return Response(content)
 
+class ForgetPassword(APIView):
+    def get(self, request):
+        user_data = request.query_params
+        token = user_data.get('token')
+        email = user_data.get('user')
+        user = Users.objects.filter(username=email)
+        default_token_generator = PasswordResetTokenGenerator()
+        if user:
+            check = default_token_generator.check_token({"pk": user[0].id, "username": user[0].username,
+                                                            "password": user[0].password}, token)
+            if check:
+                return Response(200)
+        return Response(404)
+
+
+    def post(self, request):
+        user_data = request.data
+        email = user_data.get('email')
+        user = Users.objects.filter(username=email)
+        if user:
+            default_token_generator = PasswordResetTokenGenerator()
+            token = default_token_generator.make_token({"pk": user[0].id, "username": user[0].username,
+                                                        "password": user[0].password})
+            send_email(user[0].username, "http://dipleo.com:8000/forget_password?user={}&token={}".format(user[0].username,
+                                                                                                          token))
+            # print(token)
+            return Response(200)
+
+        return Response(404)
+
+    def put(self, request):
+        user_data = request.data
+        token = user_data.get('token')
+        email = user_data.get('user')
+        password = user_data.get('password')
+        print(email)
+        user = Users.objects.filter(username=email)
+        default_token_generator = PasswordResetTokenGenerator()
+        if user:
+            check = default_token_generator.check_token({"pk": user[0].id, "username": user[0].username,
+                                                         "password": user[0].password}, token)
+            if check:
+                Users.objects.filter(username=email).update(password=password)
+                return Response(200)
+        return Response(404)
 
 class UsersList(APIView):
     def get(self, request):
