@@ -6,6 +6,8 @@ from .serializers import *
 from rest_framework.parsers import JSONParser
 import json
 from django.db.models import Count
+from django.http import HttpResponse
+
 
 
 class Login(APIView):
@@ -49,13 +51,25 @@ class UsersList(APIView):
 class UserProfile(APIView):
     def get(self, request):
         user_data = request.query_params
-        user_id = user_data.get('user_id')
-        if user_id:
+        user_id = user_data.get('id')
+        if not user_id:
             user_profile = Profile.objects.all()
+            serializer = UserProfileSerializer(user_profile, many=True)
+            return Response(serializer.data)
+        
         else:
-            user_profile = Profile.objects.filter(user_id=user_id)
-        serializer = UserProfileSerializer(user_profile, many=True)
-        return Response(serializer.data)
+            user = Users.objects.get(id=user_id)
+            #user = Users.object.get(id=user_id)
+            user_profile = Profile.objects.filter(user=user)
+            user_profile2 = Profile.objects.get(user=user)
+            #abc = user_profile.append(Education.objects.all())
+            education = Education.objects.filter(profiles=user_profile2)
+            serializer = UserProfileSerializer(user_profile, many=True)
+            print('userrrr', user_profile)
+            #print('Seriaizer', serializer.data)
+            serializer2 = EducationSerializer(education, many=True)
+            #serializer3 = serializer.append(serializer2)
+            return Response(serializer2.data)
 
     def post(self, request):
         profile_data = request.data
