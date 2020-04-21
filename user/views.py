@@ -106,17 +106,33 @@ class UserProfile(APIView):
         
         else:
             user = Users.objects.get(id=user_id)
-            #user = Users.object.get(id=user_id)
             user_profile = Profile.objects.filter(user=user)
             user_profile2 = Profile.objects.get(user=user)
-            #abc = user_profile.append(Education.objects.all())
+
             education = Education.objects.filter(profiles=user_profile2)
+            programming = Programming.objects.filter(profiles=user_profile2)
+            skills = Skill.objects.filter(profiles=user_profile2)
+            data_ser = Data.objects.filter(profiles=user_profile2)
+            scholarship = Scholarship.objects.filter(profiles=user_profile2)
+            design = Design.objects.filter(profiles=user_profile2)
+            reference = Reference.objects.filter(profiles=user_profile2)
+            lang = Language.objects.filter(profiles=user_profile2)
+            intro = Employement.objects.filter(profiles=user_profile2)
+
             serializer = UserProfileSerializer(user_profile, many=True)
-            print('userrrr', user_profile)
-            #print('Seriaizer', serializer.data)
             serializer2 = EducationSerializer(education, many=True)
-            #serializer3 = serializer.append(serializer2)
-            return Response(serializer2.data)
+            serializer3 = ProgrammingSerializer(programming, many=True)
+            serializer4 = SkillSerializer(skills, many=True)
+            serializer5 = DataSerializer(data_ser, many=True)
+            serializer6 = ScholarshipSerializer(scholarship, many=True)
+            serializer7 = DesignSerializer(design, many=True)
+            serializer8 = ReferenceSerializer(reference, many=True)
+            serializer9 = LanguageSerializer(lang, many=True)
+            serializer10 = EmploymentSerializer(intro, many=True)
+
+            return Response(serializer.data + serializer2.data + serializer3.data +
+                            serializer4.data + serializer5.data + serializer6.data +
+                            serializer7.data + serializer8.data + serializer9.data + serializer10.data)
 
     def post(self, request):
         profile_data = request.data

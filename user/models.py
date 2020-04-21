@@ -69,7 +69,8 @@ class Profile(models.Model):
     objects = models.Manager()
 
     def __str__(self):
-        return self.email
+        return self.name
+
 
 
 class Education(models.Model):
