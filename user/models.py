@@ -179,3 +179,4 @@ class Settings(models.Model):
         ('inactive', 'inactive'),
     )
     user_status = models.CharField(max_length=30, choices=USER_STATUS)
+    user_picture = models.TextField(null=True)

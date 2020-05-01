@@ -443,7 +443,6 @@ class UserSettings(APIView):
         # pass
         user_data = request.data
         user_id = user_data.get('user_id')
-        print(user_id)
         user = Users.objects.get(id=user_id)
         Settings.objects.create(user=user, user_status='looking_for_a_job')
 
@@ -457,8 +456,9 @@ class UserSettings(APIView):
         application_status = user_data.get('application_status')
         newsletter_promotions = user_data.get('newsletter_promotions')
         user_status = user_data.get('user_status')
+        user_picture = user_data.get('user_picture')
         user = Users.objects.get(id=user_id)
         Settings.objects.filter(user=user).update(vacany_suggestions=vacany_suggestions, application_status=application_status,
-                                newsletter_promotions=newsletter_promotions, user_status=user_status)
+                                newsletter_promotions=newsletter_promotions, user_status=user_status, user_picture=user_picture)
 
         return Response(200)
