@@ -2,7 +2,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Company, Users, Jobs, Job_Skill
-from user.models import ApplyJob
+from user.models import ApplyJob, Settings
 from .serializers import UserSerializer, CompanySerializer, JobSerializer
 from rest_framework.parsers import JSONParser
 import json
@@ -45,6 +45,7 @@ class CompanyList(APIView):
                                          creation_date=creation_date, founder_name=founder_name, founder_email=founder_email,
                                          founder_phone=founder_phone, founder_address=founder_address)
         
+        Settings.objects.create(user=user, user_status='looking_for_a_job')
         return Response(200)
 
 
