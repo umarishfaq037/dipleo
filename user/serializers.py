@@ -110,6 +110,14 @@ class ApplyJobsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class SavedApplyJobSerializer(serializers.ModelSerializer):
+    #job = ApplyJobsSerializer(read_only = True)
+
+    class Meta:
+        model = SavedApplyJob
+        fields = '__all__'
+
+
 class CandidateApplyJobsSerializer(serializers.ModelSerializer):
     candiate = UserProfileSerializer(read_only=True)
     class Meta:

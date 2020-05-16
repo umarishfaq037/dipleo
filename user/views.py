@@ -329,6 +329,19 @@ class SavedJobs(APIView):
         return Response(200)
 
 
+class SavedApplyJobss(APIView):
+    def get(self, request):
+        all_saved_jobs = SavedApplyJob.objects.all()
+        serializer = SavedApplyJobSerializer(all_saved_jobs, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        user_data = request.data
+        apply_job = user_data.get('apply_job')
+        SavedApplyJob.objects.create(apply_job=apply_job)
+        return Response(200)
+
+
 class showTopJobs(APIView):
     def get(self, request): 
         top_scores = (Jobs.objects
