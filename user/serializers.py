@@ -111,8 +111,8 @@ class ApplyJobsSerializer(serializers.ModelSerializer):
 
 
 class SavedApplyJobSerializer(serializers.ModelSerializer):
-    #job = ApplyJobsSerializer(read_only = True)
-
+    job = JobSerializer(read_only=True)
+    # user = UserSerializer(read_only=True)
     class Meta:
         model = SavedApplyJob
         fields = '__all__'

@@ -158,6 +158,7 @@ class ApplyJob(models.Model):
 
 
 class SavedApplyJob(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
     apply_job = models.ForeignKey(ApplyJob, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -45,7 +45,7 @@ urlpatterns = [
     url(r'user_notifications/<int:user_id>', UserNotifications.as_view()),
     url(r'user_settings', UserSettings.as_view()),
     url(r'forget_password', ForgetPassword.as_view()),
-    url(r'saved_apply_jobs', SavedApplyJobss.as_view()),
+    url(r'saved_applicants', SavedApplyJobss.as_view()),
     url(r'send_email', SendEmail.as_view()),
 
 ]

@@ -331,14 +331,22 @@ class SavedJobs(APIView):
 
 class SavedApplyJobss(APIView):
     def get(self, request):
-        all_saved_jobs = SavedApplyJob.objects.all()
+        print("Request received")
+        user_data = request.query_params
+        user_id = user_data.get('user_id')
+        all_saved_jobs = SavedApplyJob.objects.filter(user_id=user_id)
         serializer = SavedApplyJobSerializer(all_saved_jobs, many=True)
         return Response(serializer.data)
 
     def post(self, request):
+
+
         user_data = request.data
         apply_job = user_data.get('apply_job')
-        SavedApplyJob.objects.create(apply_job=apply_job)
+        user_id = user_data.get('user_id')
+        apply_job = ApplyJob.objects.get(id=apply_job)
+        # user = Users.objects.get(id=user_id)
+        SavedApplyJob.objects.create(apply_job=apply_job, user_id=user_id)
         return Response(200)
 
 
