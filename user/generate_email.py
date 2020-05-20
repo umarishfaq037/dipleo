@@ -49,7 +49,7 @@ def send_email(receiver_email, token):
         )
 
 
-def general_send_email(receiver_email, subject, message):
+def general_send_email(receiver_email, subject, message1):
 
 
 
@@ -73,7 +73,7 @@ def general_send_email(receiver_email, subject, message):
         </p>
       </body>
     </html>
-    """.format(message)
+    """.format(message1)
 
     # Turn these into plain/html MIMEText objects
     part1 = MIMEText(text, "plain")
