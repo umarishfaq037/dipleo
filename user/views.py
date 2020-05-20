@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from .models import *
 from company.models import *
 from user.password_generator import PasswordResetTokenGenerator
-from user.generate_email import send_email
+from user.generate_email import *
 from .serializers import *
 from rest_framework.parsers import JSONParser
 import json
@@ -473,5 +473,19 @@ class UserSettings(APIView):
         user = Users.objects.get(id=user_id)
         Settings.objects.filter(user=user).update(vacany_suggestions=vacany_suggestions, application_status=application_status,
                                 newsletter_promotions=newsletter_promotions, user_status=user_status, user_picture=user_picture)
+
+        return Response(200)
+
+class SendEmail(APIView):
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        # pass
+        user_data = request.data
+        subject = user_data.get('subject')
+        email = user_data.get('email')
+        message = user_data.get('message')
+        general_send_email(email, subject, message)
 
         return Response(200)
