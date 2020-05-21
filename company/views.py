@@ -10,7 +10,9 @@ from django.core import serializers
 
 class CompanyList(APIView):
     def get(self, request):
-        company_list = Company.objects.all()
+        company_data = request.query_params
+        company_id = company_data.get('company_id')
+        company_list = Company.objects.filter(id=company_id)
         serializer = CompanySerializer(company_list, many=True)
         return Response(serializer.data)
 
