@@ -277,9 +277,12 @@ class ApplyJobs(APIView):
         user_data = request.query_params
         user_id = user_data.get('user_id')
         company_id = user_data.get('company_id')
+        job_id = user_data.get('job_id')
         if user_id:
             profile = Profile.objects.get(user_id = user_id)
             all_applied_jobs = ApplyJob.objects.filter(user=profile)
+        elif:
+            all_applied_jobs = ApplyJob.objects.filter(job_id=job_id)
         elif company_id:
             all_applied_jobs = ApplyJob.objects.filter(company_id=company_id)   
         else:
