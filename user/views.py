@@ -281,7 +281,7 @@ class ApplyJobs(APIView):
         if user_id:
             profile = Profile.objects.get(user_id = user_id)
             all_applied_jobs = ApplyJob.objects.filter(user=profile)
-        elif:
+        elif job_id:
             all_applied_jobs = ApplyJob.objects.filter(job_id=job_id)
         elif company_id:
             all_applied_jobs = ApplyJob.objects.filter(company_id=company_id)   
