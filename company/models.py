@@ -29,27 +29,27 @@ class Company(models.Model):
 
 class Jobs(models.Model):
     company = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
-    job_title = models.CharField(max_length=30, default='Job Title')
-    industry = models.CharField(max_length=30, default='industry')
-    city = models.CharField(max_length=30, default='City')
-    country = models.CharField(max_length=30, default='Country')
-    salary = models.IntegerField(default=1000)
-    job_type = models.CharField(max_length=30, default='Job Type')
-    work_days = models.CharField(max_length=100, default='Work_days')
-    num_vacanices = models.IntegerField(default=1)
-    qualification = models.CharField(max_length=30, default='Qualification')
-    description = models.TextField(max_length=500, default='Description')
-    create_date = models.DateField(default=datetime.now)
-    expiry_date = models.DateField()
-    total_exp = models.IntegerField(default=1)
+    job_title = models.CharField(max_length=30, default='Job Title', null=True)
+    industry = models.CharField(max_length=30, default='industry', null=True)
+    city = models.CharField(max_length=30, default='City', null=True)
+    country = models.CharField(max_length=30, default='Country', null=True)
+    salary = models.IntegerField(default=1000, null=True)
+    job_type = models.CharField(max_length=30, default='Job Type', null=True)
+    work_days = models.CharField(max_length=100, default='Work_days', null=True)
+    num_vacanices = models.IntegerField(default=1, null=True)
+    qualification = models.CharField(max_length=30, default='Qualification', null=True)
+    description = models.TextField(max_length=500, default='Description', null=True)
+    create_date = models.DateField(default=datetime.now, null=True)
+    expiry_date = models.DateField(null=True)
+    total_exp = models.IntegerField(default=1, null=True)
 
     def __str__(self):
         return self.job_title
 
 class Job_Skill(models.Model):
     job = models.ForeignKey(Jobs, on_delete=models.DO_NOTHING, default=False)
-    skill = models.CharField(max_length=50, default='Skill1')
-    experience = models.IntegerField(default = 5)
+    skill = models.CharField(max_length=50, null=True)
+    experience = models.IntegerField(null=True)
 
 
 class Applicants(models.Model):
