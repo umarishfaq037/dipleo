@@ -94,7 +94,8 @@ class JobList(APIView):
                                          create_date=create_date, expiry_date=expiry_date,
                                          total_exp=total_exp)
        
-        skills = json.loads(profile_data.get('skills'))
+        skills = profile_data.get('skills')
+        skills = json.loads(skills) if skills else []
         for skill in skills:
             tech = skill.get('skill')
             exp = skill.get('exp')
