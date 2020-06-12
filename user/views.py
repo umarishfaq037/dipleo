@@ -230,7 +230,8 @@ class UserProfile(APIView):
                                        phone=phone, email=email)
 
         # Skills
-        skills = json.loads(profile_data.get('skills'))
+        skills = profile_data.get('skills')
+        skills = json.loads(skills) if skills else []
         for skill in skills:
             name = skill.get('name')
             value = skill.get('value')
@@ -238,7 +239,8 @@ class UserProfile(APIView):
             Skill.objects.create(profiles=profile, name=name, value=value)
 
         # Language
-        languages = json.loads(profile_data.get('languages'))
+        languages = profile_data.get('languages')
+        languages = json.loads(languages) if languages else None
         for language in languages:
             name = language.get('name')
             value = language.get('value')
@@ -246,7 +248,8 @@ class UserProfile(APIView):
             Language.objects.create(profiles=profile, name=name, value=value)
 
         # Programming
-        programmings = json.loads(profile_data.get('programmings'))
+        programmings = profile_data.get('programmings')
+        programmings = json.loads(programmings) if programmings else []
         for programming in programmings:
             name = programming.get('name')
             value = programming.get('value')
@@ -254,7 +257,8 @@ class UserProfile(APIView):
             Programming.objects.create(profiles=profile, name=name, value=value)
 
         # Design
-        designs = json.loads(profile_data.get('designs'))
+        designs = profile_data.get('designs')
+        designs = json.loads(designs) if designs else []
         for design in designs:
             name = design.get('name')
             value = design.get('value')
@@ -262,7 +266,8 @@ class UserProfile(APIView):
             Design.objects.create(profiles=profile, name=name, value=value)
 
         # Data
-        datas = json.loads(profile_data.get('datas'))
+        datas = profile_data.get('datas')
+        datas = json.loads(datas) if datas else []
         for data in datas:
             name = data.get('name')
             value = data.get('value')
