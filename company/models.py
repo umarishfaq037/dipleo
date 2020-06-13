@@ -29,19 +29,19 @@ class Company(models.Model):
 
 class Jobs(models.Model):
     company = models.ForeignKey(Company, on_delete=models.DO_NOTHING)
-    job_title = models.CharField(max_length=30, default='Job Title', null=True)
-    industry = models.CharField(max_length=30, default='industry', null=True)
-    city = models.CharField(max_length=30, default='City', null=True)
-    country = models.CharField(max_length=30, default='Country', null=True)
+    job_title = models.CharField(max_length=30, null=True)
+    industry = models.CharField(max_length=30, null=True)
+    city = models.CharField(max_length=30, null=True)
+    country = models.CharField(max_length=30, null=True)
     salary = models.IntegerField(default=1000, null=True)
-    job_type = models.CharField(max_length=30, default='Job Type', null=True)
-    work_days = models.CharField(max_length=100, default='Work_days', null=True)
+    job_type = models.CharField(max_length=30, null=True)
+    work_days = models.CharField(max_length=100, null=True)
     num_vacanices = models.IntegerField(default=1, null=True)
-    qualification = models.CharField(max_length=30, default='Qualification', null=True)
-    description = models.TextField(max_length=500, default='Description', null=True)
-    create_date = models.DateField(default=datetime.now, null=True)
+    qualification = models.CharField(max_length=30, null=True)
+    description = models.TextField(max_length=500, null=True)
+    create_date = models.DateField(default=datetime.now)
     expiry_date = models.DateField(null=True)
-    total_exp = models.IntegerField(default=1, null=True)
+    total_exp = models.IntegerField(default=1)
 
     def __str__(self):
         return self.job_title
