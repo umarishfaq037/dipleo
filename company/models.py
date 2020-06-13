@@ -39,7 +39,7 @@ class Jobs(models.Model):
     num_vacanices = models.IntegerField(default=1, null=True)
     qualification = models.CharField(max_length=30, null=True)
     description = models.TextField(max_length=500, null=True)
-    create_date = models.DateField(default=datetime.now)
+    create_date = models.DateField(default=datetime.now, blank=True)
     expiry_date = models.DateField(null=True)
     total_exp = models.IntegerField(default=1)
 
