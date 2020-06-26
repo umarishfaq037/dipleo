@@ -24,8 +24,9 @@ class Login(APIView):
             email = profile_data.get('email')
             password = profile_data.get('password')
             # users_type = profile_data.get('type')
-            user = Users.objects.get(username=email, password=password)
+            user = Users.objects(username=email, password=password)
             if user:
+                user = user[0]
                 if user.users_type == 'Seeker':
                     profile = Profile.objects.get(user=user)
                     content = {"username": user.username, "type": user.users_type, "user_id": user.id, "firstname": profile.name, "surname": profile.surname, "status": 200}
