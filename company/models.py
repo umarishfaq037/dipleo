@@ -13,7 +13,7 @@ class Company(models.Model):
     address = models.CharField(max_length=100, null=True)
     city = models.CharField(max_length=50, null=True)
     country = models.CharField(max_length=50, null=True)
-    total_emp = models.IntegerField(default=1)
+    total_emp = models.CharField(max_length=100, null=True)
     description = models.TextField(max_length=500, null=True)
     doc_type = models.CharField(max_length=50, null=True)
     doc_num = models.CharField(max_length=30, null=True)
