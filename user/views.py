@@ -173,8 +173,8 @@ class UserProfile(APIView):
         city3 = profile_data.get('city3')
         min_salary = profile_data.get('min_salary')
         max_salary = profile_data.get('max_salary')
-        existing = Users.objects.filter(username='email')
-        if len(existing) == 0:
+        existing = Users.objects.filter(username=email)
+        if not existing:
             user = Users.objects.create(username=email, password=password, users_type='Seeker')
 
             profile = Profile.objects.create(user=user,
