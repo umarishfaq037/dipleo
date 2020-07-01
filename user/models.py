@@ -43,7 +43,7 @@ class Profile(models.Model):
     available = models.CharField(max_length=10, default='travel', choices=AVAILABLE)
     #academy_id . It will be a foreign key
     # password = models.CharField(max_length=50)
-    years_of_experience = models.IntegerField(null=True)
+    years_of_experience = models.CharField(max_length=50, null=True)
     CURRENT_SITUATION = (
         ('working', 'working'),
         ('looking_for_job', 'looking_for_job')

@@ -175,6 +175,7 @@ class UserProfile(APIView):
         max_salary = profile_data.get('max_salary')
         existing = Users.objects.filter(username=email)
         if not existing:
+
             user = Users.objects.create(username=email, password=password, users_type='Seeker')
 
             profile = Profile.objects.create(user=user,
