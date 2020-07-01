@@ -176,6 +176,9 @@ class Notifications(models.Model):
     notification = models.TextField()
     is_read = models.BooleanField(default=False)
 
+class Subscribe(models.Model):
+    email = models.TextField()
+
 class Settings(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
     vacany_suggestions = models.BooleanField(default=False, null=True)
