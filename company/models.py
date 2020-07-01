@@ -33,7 +33,7 @@ class Jobs(models.Model):
     industry = models.CharField(max_length=30, null=True)
     city = models.CharField(max_length=30, null=True)
     country = models.CharField(max_length=30, null=True)
-    salary = models.IntegerField(default=1000, null=True)
+    salary = models.CharField(max_length=70, null=True)
     job_type = models.CharField(max_length=30, null=True)
     work_days = models.CharField(max_length=100, null=True)
     num_vacanices = models.IntegerField(default=1, null=True)
