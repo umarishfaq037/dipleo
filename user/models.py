@@ -177,7 +177,7 @@ class Notifications(models.Model):
     is_read = models.BooleanField(default=False)
 
 class Subscribe(models.Model):
-    email = models.TextField()
+    email = models.CharField(max_length=300)
 
 class Settings(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
