@@ -207,7 +207,7 @@ class UserProfile(APIView):
                 name = scholarship.get('name')
                 date = scholarship.get('date')
 
-                Scholarship.objects.create(profiles=profile, name=name, date=date)
+                Scholarship.objects.create(profiles=profile, name=name, date=date if date != '--' else None)
 
             # Employments
             employments = json.loads(profile_data.get('employments'))
