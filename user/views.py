@@ -509,7 +509,7 @@ class SendEmail(APIView):
         email = user_data.get('email')
         message = user_data.get('message')
         type = user_data.get('type')
-        if type:
+        if subject == 'Dipleo Subscription':
             subscribe = Subscribe.objects.filter(email=email)
             if not subscribe:
                 Subscribe.objects.create(email=email)
