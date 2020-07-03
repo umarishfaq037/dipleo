@@ -178,6 +178,8 @@ class Notifications(models.Model):
 
 class Subscribe(models.Model):
     email = models.CharField(max_length=300)
+    def __str__(self):
+        return self.email
 
 class Settings(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
