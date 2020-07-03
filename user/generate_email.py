@@ -3,8 +3,8 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-sender_email = "email"
-password = "password"
+sender_email = "teamdipleo@gmail.com"
+password = "Juanes123"
 
 
 def send_email(receiver_email, token):

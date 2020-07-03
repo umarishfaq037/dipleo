@@ -13,5 +13,6 @@ admin.site.register(Programming)
 admin.site.register(Reference)
 admin.site.register(Scholarship)
 admin.site.register(SavedApplyJob)
+admin.site.register(Subscribe)
 
 # Register your models here.

@@ -508,6 +508,11 @@ class SendEmail(APIView):
         subject = user_data.get('subject')
         email = user_data.get('email')
         message = user_data.get('message')
+        type = user_data.get('type')
+        if type:
+            subscribe = Subscribe.objects.filter(email=email)
+            if not subscribe:
+                Subscribe.objects.create(email=email)
         general_send_email(email, subject, message)
 
         return Response(200)
