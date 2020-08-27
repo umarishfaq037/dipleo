@@ -4,7 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 sender_email = "teamdipleo@gmail.com"
-password = "Juanes123"
+password = "Tormenta2."
 
 
 def send_email(receiver_email, token):

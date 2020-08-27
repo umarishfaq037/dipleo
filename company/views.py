@@ -5,6 +5,7 @@ from .models import Company, Users, Jobs, Job_Skill
 from user.models import ApplyJob, Settings
 from .serializers import UserSerializer, CompanySerializer, JobSerializer
 from rest_framework.parsers import JSONParser
+from django.db.models import Q
 import json
 from django.core import serializers
 
@@ -144,12 +145,24 @@ class JobSearch(APIView):
         salary = job_list.get('salary')
         job_type = job_list.get('job_type')
 
+        query = Q()
 
-        abc = Jobs.objects.filter(job_title=title, city=city, industry=industry, total_exp=total_exp, 
-                            salary=salary, job_type=job_type)
+        if title:
+            query &= Q(title=title)
+        if city:
+            query &= Q(city=city)
+        if industry:
+            query &= Q(industry=industry)
+        if total_exp:
+            query &= Q(total_exp=total_exp)
+        if salary:
+            query &= Q(salary=salary)
+        if job_type:
+            query &= Q(job_type=job_type)
 
-        response = serializers.serialize('json', abc)
+        jobs = Jobs.objects.filter(query)
 
-        #print(response)
+        response = serializers.serialize('json', jobs)
+
         return Response(response, content_type='application/json')
 
