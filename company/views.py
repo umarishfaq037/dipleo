@@ -148,7 +148,7 @@ class JobSearch(APIView):
         query = Q()
 
         if title:
-            query &= Q(title=title)
+            query &= Q(job_title=title)
         if city:
             query &= Q(city=city)
         if industry:
